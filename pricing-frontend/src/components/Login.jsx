@@ -1,5 +1,5 @@
-import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiLock, FiMail, FiEye, FiEyeOff } from "react-icons/fi";
 import { SiApple } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
@@ -9,6 +9,7 @@ import BackgroundImage from "./image/image_1_1768833455188.jpg";
 import { handleLoginSubmit } from "./SignUpHandler/HandleSubmit";
 
 const Login = () => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const { fieldValues, handleChange } = useFormFields({
         email: "",
@@ -22,7 +23,7 @@ const Login = () => {
                 {/* form */}
                 <div className="flex flex-col justify-center items-center px-4 py-10 lg:h-[90vh]">
                     <form
-                        onSubmit={handleLoginSubmit}
+                        onSubmit={(e) => handleLoginSubmit(e, navigate, fieldValues)}
                         className="w-full border border-slate-800 p-10 rounded-md max-w-md shadow-lg hover:border-blue-500 hover:ring-2 hover:ring-blue-500/40"
                     >
                         <div>
@@ -31,10 +32,9 @@ const Login = () => {
                                 <div className="relative group">
                                     <FiMail
                                         className={`absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-opacity duration-200 group-focus-within:opacity-0
-                                            ${
-                                                fieldValues.email
-                                                    ? "opacity-0"
-                                                    : "opacity-100"
+                                            ${fieldValues.email
+                                                ? "opacity-0"
+                                                : "opacity-100"
                                             }`}
                                     />
                                     <input
@@ -52,11 +52,10 @@ const Login = () => {
                                     <FiLock
                                         size={15}
                                         className={`absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400 transition-opacity duration-200 group-focus-within:opacity-0
-                                                                            ${
-                                                                                fieldValues.password
-                                                                                    ? "opacity-0"
-                                                                                    : "opacity-100"
-                                                                            }`}
+                                                                            ${fieldValues.password
+                                                ? "opacity-0"
+                                                : "opacity-100"
+                                            }`}
                                     />
                                     <input
                                         className="bg-slate-900 pl-10 text-white p-2 rounded-md w-full border border-transparent hover:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none placeholder-white/35 hover:placeholder-white/50
