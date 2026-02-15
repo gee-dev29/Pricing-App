@@ -1,5 +1,5 @@
-import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiLock, FiUser, FiMail, FiEye, FiEyeOff } from "react-icons/fi";
 import { SiApple } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
@@ -14,6 +14,7 @@ import BackgroundImage from "../image/image_1_1768833455188.jpg";
 export default function SignUp() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const navigate = useNavigate();
 
     const { fieldValues, handleChange } = useFormFields({
         firstName: "",
@@ -45,7 +46,7 @@ export default function SignUp() {
                 {/* Form */}
                 <div className="flex flex-col justify-center items-center px-4 py-10 lg:h-[90vh]">
                     <form
-                        onSubmit={handleSignUpSubmit}
+                        onSubmit={(e) => handleSignUpSubmit(e, navigate, fieldValues, canSubmit)}
                         className="w-full border border-slate-800 p-10 rounded-md max-w-md shadow-lg hover:border-blue-700 hover:ring-2 hover:ring-blue-500/40"
                     >
                         <div>
@@ -55,11 +56,10 @@ export default function SignUp() {
                                 <div className="relative group">
                                     <FiUser
                                         className={`absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-opacity duration-200 group-focus-within:opacity-0
-                                    ${
-                                        fieldValues.firstName
-                                            ? "opacity-0"
-                                            : "opacity-100"
-                                    }`}
+                                    ${fieldValues.firstName
+                                                ? "opacity-0"
+                                                : "opacity-100"
+                                            }`}
                                     />
                                     <input
                                         className="bg-slate-900 pl-10 text-white p-2 rounded-md w-full border border-transparent hover:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none placeholder-white/35 hover:placeholder-white/50"
@@ -75,11 +75,10 @@ export default function SignUp() {
                                 <div className="relative group">
                                     <FiUser
                                         className={`absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-opacity duration-200 group-focus-within:opacity-0
-                                    ${
-                                        fieldValues.lastName
-                                            ? "opacity-0"
-                                            : "opacity-100"
-                                    }`}
+                                    ${fieldValues.lastName
+                                                ? "opacity-0"
+                                                : "opacity-100"
+                                            }`}
                                     />
                                     <input
                                         className="bg-slate-900 pl-10 text-white p-2 rounded-md w-full border border-transparent hover:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none placeholder-white/35 hover:placeholder-white/50"
@@ -97,11 +96,10 @@ export default function SignUp() {
                                 <div className="relative group">
                                     <FiMail
                                         className={`absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-opacity duration-200 group-focus-within:opacity-0
-                                        ${
-                                            fieldValues.email
+                                        ${fieldValues.email
                                                 ? "opacity-0"
                                                 : "opacity-100"
-                                        }`}
+                                            }`}
                                     />
                                     <input
                                         className="bg-slate-900 pl-10 text-white p-2 rounded-md w-full border border-transparent hover:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none placeholder-white/35 hover:placeholder-white/50"
@@ -118,10 +116,9 @@ export default function SignUp() {
                                     <FiLock
                                         size={15}
                                         className={`absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400 transition-opacity duration-200 group-focus-within:opacity-0
-                                            ${
-                                                fieldValues.password
-                                                    ? "opacity-0"
-                                                    : "opacity-100"
+                                            ${fieldValues.password
+                                                ? "opacity-0"
+                                                : "opacity-100"
                                             }`}
                                     />
                                     <input
@@ -159,10 +156,9 @@ export default function SignUp() {
                                     <FiLock
                                         size={15}
                                         className={`absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400 transition-opacity duration-200 group-focus-within:opacity-0
-                                            ${
-                                                fieldValues.confirmPassword
-                                                    ? "opacity-0"
-                                                    : "opacity-100"
+                                            ${fieldValues.confirmPassword
+                                                ? "opacity-0"
+                                                : "opacity-100"
                                             }`}
                                     />
                                     <input
@@ -204,16 +200,15 @@ export default function SignUp() {
                                             !fieldValues.password
                                                 ? "Create Account"
                                                 : !isPasswordStrongEnough
-                                                  ? "Password Too Weak"
-                                                  : !isMatchingPasswords
-                                                    ? "Passwords Do Not Match"
-                                                    : "Create Account"
+                                                    ? "Password Too Weak"
+                                                    : !isMatchingPasswords
+                                                        ? "Passwords Do Not Match"
+                                                        : "Create Account"
                                         }
-                                        className={`bg-blue-500 text-white p-2 mt-5 rounded-md w-full border-0 outline-none focus:ring-0 ${
-                                            canSubmit
+                                        className={`bg-blue-500 text-white p-2 mt-5 rounded-md w-full border-0 outline-none focus:ring-0 ${canSubmit
                                                 ? "hover:bg-blue-600 cursor-pointer"
                                                 : "opacity-50 cursor-not-allowed"
-                                        }`}
+                                            }`}
                                         disabled={!canSubmit}
                                     />
                                     <hr className="my-6 border-t border-gray-500" />
