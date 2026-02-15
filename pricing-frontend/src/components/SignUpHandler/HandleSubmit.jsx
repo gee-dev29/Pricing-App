@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const handleSignUpSubmit = (e) => {
-    const navigate = useNavigate();
+export const handleSignUpSubmit = (e, navigate, fieldValues, canSubmit) => {
     e.preventDefault();
 
     if (!canSubmit) {
@@ -9,13 +8,13 @@ export const handleSignUpSubmit = (e) => {
     }
 
     const formData = {
-        firstName: e.target.firstName.value,
-        lastName: e.target.lastName.value,
-        email: e.target.email.value,
-        password: e.target.password.value,
+        first_name: fieldValues.firstName,
+        last_name: fieldValues.lastName,
+        email: fieldValues.email,
+        password: fieldValues.password,
     };
 
-    fetch("/api/signup", {
+    fetch("http://localhost:6800/auth/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -24,7 +23,9 @@ export const handleSignUpSubmit = (e) => {
     })
         .then((response) => {
             if (!response.ok) {
-                throw new Error("Network response was not ok");
+                return response.json().then((err) => {
+                    throw new Error(err.message || "Network response was not ok");
+                });
             }
             return response.json();
         })
@@ -34,18 +35,19 @@ export const handleSignUpSubmit = (e) => {
         })
         .catch((error) => {
             console.error("Error:", error);
+            alert(`Sign up failed: ${error.message}`);
         });
 };
 
-export const handleLoginSubmit = (e) => {
+export const handleLoginSubmit = (e, navigate, fieldValues) => {
     e.preventDefault();
 
     const formData = {
-        email: e.target.email.value,
-        password: e.target.password.value,
+        email: fieldValues.email,
+        password: fieldValues.password,
     };
 
-    fetch("/api/login", {
+    fetch("http://localhost:6800/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -54,19 +56,29 @@ export const handleLoginSubmit = (e) => {
     })
         .then((response) => {
             if (!response.ok) {
-                throw new Error("Network response was not ok");
+                return response.json().then((err) => {
+                    throw new Error(err.message || "Network response was not ok");
+                });
             }
             return response.json();
         })
         .then((data) => {
             console.log("Success:", data);
-            // Handle successful login (e.g., redirect to dashboard)
+            // navigate("/dashboard"); // Redirect to dashboard or home after login
         })
         .catch((error) => {
             console.error("Error:", error);
+            alert(`Login failed: ${error.message}`);
         });
 };
 
+export const handleSubmit = (e) => {
+    try {
+
+    } catch (error) {
+
+    }
+}
 export const handleLogout = () => {
     // Implement logout logic here
 };
