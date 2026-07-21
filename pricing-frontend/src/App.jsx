@@ -12,8 +12,9 @@ function App() {
     return (
         <div className="min-h-screen bg-slate-950 text-white w-full sm:w-full mx-auto">
             <Routes>
+                <Route path="/" element={<SignUp />} />
                 <Route
-                    path="/"
+                    path="/home"
                     element={
                         <>
                             <Navbar />
