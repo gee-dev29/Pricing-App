@@ -31,7 +31,7 @@ export const handleSignUpSubmit = (e, navigate, fieldValues, canSubmit) => {
         })
         .then((data) => {
             console.log("Success:", data);
-            navigate("/login");
+            navigate("/home");
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -64,7 +64,7 @@ export const handleLoginSubmit = (e, navigate, fieldValues) => {
         })
         .then((data) => {
             console.log("Success:", data);
-            // navigate("/dashboard"); // Redirect to dashboard or home after login
+            navigate("/home"); // Navigate to the home page after successful login
         })
         .catch((error) => {
             console.error("Error:", error);
